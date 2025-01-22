@@ -1,17 +1,32 @@
 package org.skypro.skyshop.controller;
 
-import org.skypro.skyshop.model.article.Article;
-import org.skypro.skyshop.model.product.Product;
+import org.skypro.skyshop.model.search.Searchable;
+import org.skypro.skyshop.service.SearchService;
+import org.skypro.skyshop.service.StorageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class ShopController {
+    @Autowired
+    private SearchService searchService;
+    @Autowired
+    private StorageService storageService;
+
+    @Bean
+    public SearchService getSearchService() {
+        return searchService;
+    }
+
+    @Bean
+    public StorageService getStorageService() {
+        return storageService;
+    }
 
     @GetMapping
     public String hello() {
@@ -19,24 +34,20 @@ public class ShopController {
     }
 
     @GetMapping("/products")
-    public Collection<Product> getAllProducts() {;
-        return getAllProducts();
+    public void allProducts() {
+        System.out.println(storageService.getAllProducts());
     }
 
     @GetMapping("/articles")
-    public Collection<Article> getAllArticles() {
-        return getAllArticles();
+    public void allArticles() {
+        System.out.println(storageService.getAllArticles());
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam String pattern) {
-        Set<Boolean> results = new HashSet<>();
-        for (Product product : getAllProducts()) {
-            for (Article article : getAllArticles()) {
-                results.add(product.getTitle().equalsIgnoreCase(pattern));
-                results.add(article.getArticleTitle().equalsIgnoreCase(pattern));
-            }
-        }
+    public String search(@RequestParam("pattern") String pattern) {
+        Set<Searchable> results = new HashSet<>();
+        results.addAll(storageService.getAllProducts());
+        results.addAll(storageService.getAllArticles());
         return results.toString();
     }
 

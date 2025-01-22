@@ -1,11 +1,9 @@
-package org.skypro.skyshop.controller.service;
+package org.skypro.skyshop.service;
 
 import org.skypro.skyshop.model.search.SearchResult;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 

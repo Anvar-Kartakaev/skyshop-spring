@@ -1,4 +1,4 @@
-package org.skypro.skyshop.controller.service;
+package org.skypro.skyshop.service;
 
 import org.skypro.skyshop.model.article.Article;
 import org.skypro.skyshop.model.product.DiscountedProduct;
@@ -30,12 +30,16 @@ public class StorageService {
         Article article3 = new Article(UUID.randomUUID(), "Alone man", "The history for alone man");
     }
 
-    public void getAllProducts() {
-        product.entrySet().forEach(System.out::println);
+    public Set<Searchable> getAllProducts() {
+        Set<Searchable> set = new HashSet<>();
+        set.addAll(product.values());
+        return set;
     }
 
-    public void getAllArticles() {
-        article.entrySet().forEach(System.out::println);
+    public Set<Searchable> getAllArticles() {
+        Set<Searchable> set = new HashSet<>();
+        set.addAll(article.values());
+        return set;
     }
 
     public Set<Searchable> getSearchables() {
