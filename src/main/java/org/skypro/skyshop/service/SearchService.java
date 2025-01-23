@@ -3,6 +3,7 @@ package org.skypro.skyshop.service;
 import org.skypro.skyshop.model.search.SearchResult;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,11 +16,11 @@ public class SearchService {
         this.storageService = storageService;
     }
 
-    public SearchResult search(String keyword) {
-        Set<Searchable> searchables = storageService.getSearchables().stream()
-                .filter(storageService -> storageService.getSearchTerm().equalsIgnoreCase(keyword))
+    public String search(@RequestParam("pattern") String pattern) {
+        Set<Searchable> results = storageService.getSearchables().stream()
+                .filter(storageService -> storageService.getSearchTerm().equalsIgnoreCase(pattern))
                 .collect(Collectors.toSet());
-        return (SearchResult) searchables;
+        return results.toString();
     }
 
 }

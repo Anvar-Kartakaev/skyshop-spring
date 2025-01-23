@@ -1,20 +1,30 @@
 package org.skypro.skyshop.model.search;
 
 public class SearchResult {
-    private final String id;
+    private final int id;
     private final String name;
     private final String contentType;
 
-    public SearchResult(String id, String name, String contentType) {
+    public SearchResult(int id, String name, String contentType) {
         this.id = id;
         this.name = name;
         this.contentType = contentType;
     }
 
-    public static void fromSearchable(Searchable searchable) {
-        for (int i = 0; i > searchable.getId(); i++) {
-            System.out.println(i);
-        }
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public static SearchResult fromSearchable(Searchable searchable) {
+        return new SearchResult(searchable.getId(), searchable.getSearchTerm(), searchable.getContentType());
     }
 
 }

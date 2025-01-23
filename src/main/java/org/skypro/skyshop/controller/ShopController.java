@@ -1,32 +1,25 @@
 package org.skypro.skyshop.controller;
 
+import org.skypro.skyshop.model.search.SearchResult;
 import org.skypro.skyshop.model.search.Searchable;
 import org.skypro.skyshop.service.SearchService;
 import org.skypro.skyshop.service.StorageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.Set;
 
 @RestController
 public class ShopController {
-    @Autowired
-    private SearchService searchService;
-    @Autowired
-    private StorageService storageService;
+    private final SearchService searchService;
+    private final StorageService storageService;
 
-    @Bean
-    public SearchService getSearchService() {
-        return searchService;
+    public ShopController(SearchService searchService, StorageService storageService) {
+        this.searchService = searchService;
+        this.storageService = storageService;
     }
 
-    @Bean
-    public StorageService getStorageService() {
-        return storageService;
-    }
 
     @GetMapping
     public String hello() {
@@ -34,21 +27,17 @@ public class ShopController {
     }
 
     @GetMapping("/products")
-    public void allProducts() {
-        System.out.println(storageService.getAllProducts());
+    public String getAllProducts() {
+        return storageService.getAllProducts();
     }
 
     @GetMapping("/articles")
-    public void allArticles() {
-        System.out.println(storageService.getAllArticles());
+    public String getAllArticles() {
+        return storageService.getAllArticles();
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam("pattern") String pattern) {
-        Set<Searchable> results = new HashSet<>();
-        results.addAll(storageService.getAllProducts());
-        results.addAll(storageService.getAllArticles());
-        return results.toString();
+    public void search() {
     }
 
 }

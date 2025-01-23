@@ -30,16 +30,12 @@ public class StorageService {
         Article article3 = new Article(UUID.randomUUID(), "Alone man", "The history for alone man");
     }
 
-    public Set<Searchable> getAllProducts() {
-        Set<Searchable> set = new HashSet<>();
-        set.addAll(product.values());
-        return set;
+    public String getAllProducts() {
+        return product.toString();
     }
 
-    public Set<Searchable> getAllArticles() {
-        Set<Searchable> set = new HashSet<>();
-        set.addAll(article.values());
-        return set;
+    public String getAllArticles() {
+        return article.toString();
     }
 
     public Set<Searchable> getSearchables() {
