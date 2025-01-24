@@ -30,23 +30,23 @@ public class StorageService {
         Article article3 = new Article(UUID.randomUUID(), "Alone man", "The history for alone man");
     }
 
-    public String getAllProducts() {
-        return product.toString();
+    public Collection<Product> getAllProducts() {
+        return product.values();
     }
 
-    public String getAllArticles() {
-        return article.toString();
+    public Collection<Article> getAllArticles() {
+        return article.values();
     }
 
-    public Set<Searchable> getSearchables() {
-        Set<Searchable> searchables = new HashSet<>();
+    public Set<Searchable> getSearchable() {
+        Set<Searchable> searchable = new HashSet<>();
         for (Product product : product.values()) {
             for (Article article : article.values()) {
-                searchables.add(product);
-                searchables.add(article);
+                searchable.add(product);
+                searchable.add(article);
             }
         }
-        return searchables;
+        return searchable;
     }
 
 }
