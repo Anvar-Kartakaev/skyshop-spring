@@ -1,14 +1,9 @@
 package org.skypro.skyshop.service;
 
-import org.skypro.skyshop.model.search.SearchResult;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class SearchService {
@@ -18,8 +13,8 @@ public class SearchService {
         this.storageService = storageService;
     }
 
-    public SearchResult search(String pattern) {
-        return (SearchResult) storageService.getSearchable();
+    public Set<Searchable> search(String pattern) {
+        return storageService.getSearchable();
     }
 
 }

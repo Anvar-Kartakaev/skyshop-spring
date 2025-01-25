@@ -18,16 +18,17 @@ public class StorageService {
     public StorageService() {
         this.product = new HashMap<>();
         this.article = new HashMap<>();
-        addBase();
+        addProductsAndArticles();
     }
 
-    private void addBase() {
-        Product product1 = new SimpleProduct(UUID.randomUUID(), "Арбуз", 100);
-        Product product2 = new DiscountedProduct(UUID.randomUUID(), "Яблоки", 80, 5);
-        Product product3 = new FixPriceProduct(UUID.randomUUID(), "Вишня");
-        Article article1 = new Article(UUID.randomUUID(), "World", "This is my world and my life");
-        Article article2 = new Article(UUID.randomUUID(), "Java code", "Development in Java code");
-        Article article3 = new Article(UUID.randomUUID(), "Alone man", "The history for alone man");
+    private void addProductsAndArticles() {
+        product.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Арбуз", 100));
+        product.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Арбуз", 100));
+        product.put(UUID.randomUUID(), new DiscountedProduct(UUID.randomUUID(), "Яблоки", 80, 5));
+        product.put(UUID.randomUUID(), new FixPriceProduct(UUID.randomUUID(), "Вишня"));
+        article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "World", "This is my world and my life"));
+        article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Java code", "Development in Java code"));
+        article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Alone man", "The history for alone man"));
     }
 
     public Collection<Product> getAllProducts() {
