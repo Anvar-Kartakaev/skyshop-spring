@@ -41,12 +41,8 @@ public class StorageService {
 
     public Set<Searchable> getSearchable() {
         Set<Searchable> searchable = new HashSet<>();
-        for (Product product : product.values()) {
-            for (Article article : article.values()) {
-                searchable.add(product);
-                searchable.add(article);
-            }
-        }
+        searchable.addAll(product.values());
+        searchable.addAll(article.values());
         return searchable;
     }
 
