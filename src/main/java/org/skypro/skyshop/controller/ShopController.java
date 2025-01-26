@@ -3,7 +3,6 @@ package org.skypro.skyshop.controller;
 import org.skypro.skyshop.model.article.Article;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.search.SearchResult;
-import org.skypro.skyshop.model.search.Searchable;
 import org.skypro.skyshop.service.SearchService;
 import org.skypro.skyshop.service.StorageService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +38,7 @@ public class ShopController {
     }
 
     @GetMapping("/search")
-    public Set<Searchable> search(@RequestParam String pattern) {
+    public Set<SearchResult> search(@RequestParam String pattern) {
         return searchService.search(pattern);
     }
 
