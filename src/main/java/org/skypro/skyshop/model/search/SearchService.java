@@ -4,7 +4,6 @@ import org.skypro.skyshop.service.SearchResult;
 import org.skypro.skyshop.service.StorageService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,12 +16,10 @@ public class SearchService {
     }
 
     public Set<SearchResult> search(String pattern) {
-        Set<Searchable> result = storageService.getSearchable().stream().collect(Collectors.toSet());
-        Set<SearchResult> searchResults = new HashSet<>();
-        for (Searchable searchable : result) {
-            searchResults.add(new SearchResult(searchable.getId(), searchable.getNameTerm(), searchable.getContentType()));
-        }
-        return searchResults.stream().filter(searchResult -> searchResult.getName().equalsIgnoreCase(pattern)).collect(Collectors.toSet());
+        return storageService.getSearchable().stream()
+                .map(SearchResult::fromSearchable)
+                .filter(searchResult -> searchResult.getName().equalsIgnoreCase(pattern))
+                .collect(Collectors.toSet());
     }
 
 }
