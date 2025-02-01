@@ -3,6 +3,8 @@ package org.skypro.skyshop.service;
 import org.skypro.skyshop.model.basket.BasketItem;
 import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.basket.UserBasket;
+import org.skypro.skyshop.model.product.Product;
+import org.skypro.skyshop.model.search.Searchable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,7 +27,8 @@ public class BasketService {
     }
 
     public void addProductToBasket(UUID id) {
-        if (storageService.getProductById(id).isPresent()) {
+        Optional<Product> productOptional = storageService.getProductById(id);
+        if (productOptional.isPresent()) {
             throw new IllegalArgumentException("Товар отсутствует!");
         } else {
             basketId.addProduct(id);
@@ -33,7 +36,8 @@ public class BasketService {
     }
 
     public UserBasket getUserBasket() {
-        return null;
+        Collection<ProductBasket> productBasket = getStorageService().getAllProducts().stream().map((Product id) -> getBasketId()).collect(Collectors.toSet());
+        return new UserBasket(productBasket);
     }
 
 }

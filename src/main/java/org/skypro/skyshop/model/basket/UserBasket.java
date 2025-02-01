@@ -4,10 +4,13 @@ import java.util.List;
 
 public class UserBasket {
     private final List<BasketItem> items;
-    private final double total = 0.00;
+    private final double total;
 
     public UserBasket(List<BasketItem> items) {
         this.items = items;
+        double sum = items.stream().mapToDouble(x -> x.getProduct().getPrice()).sum();
+        int counts = items.stream().mapToInt(BasketItem::getCount).sum();
+        this.total = sum * counts;
     }
 
     public List<BasketItem> getItems() {
@@ -15,12 +18,7 @@ public class UserBasket {
     }
 
     public double getTotal() {
-        int count = getItems().size();
-        double total = 0.00;
-        for (BasketItem item : items) {
-            total += item.getProduct().getPrice();
-        }
-        return count * total;
+        return total;
     }
 
 }

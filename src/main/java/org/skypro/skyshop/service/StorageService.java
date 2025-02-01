@@ -23,9 +23,11 @@ public class StorageService {
 
     private void addProductsAndArticles() {
         product.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Арбуз", 100));
-        product.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Арбуз", 100));
+        product.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Груши", 100));
         product.put(UUID.randomUUID(), new DiscountedProduct(UUID.randomUUID(), "Яблоки", 80, 5));
+        product.put(UUID.randomUUID(), new DiscountedProduct(UUID.randomUUID(), "Виноград", 90, 8));
         product.put(UUID.randomUUID(), new FixPriceProduct(UUID.randomUUID(), "Вишня"));
+        product.put(UUID.randomUUID(), new FixPriceProduct(UUID.randomUUID(), "Черешня"));
         article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "World", "This is my world and my life"));
         article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Java code", "Development in Java code"));
         article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Alone man", "The history for alone man"));

@@ -1,10 +1,13 @@
 package org.skypro.skyshop.model.basket;
 
+import org.springframework.web.context.annotation.SessionScope;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@SessionScope
 public class ProductBasket {
     private final Map<UUID, Integer> basket;
 
@@ -18,7 +21,7 @@ public class ProductBasket {
     }
 
     public void addProduct(UUID id) {
-        basket.put(id, getQuantity(id) + 1);
+        basket.put(id, basket.getOrDefault(id, 0) + 1);
     }
 
     public Map<UUID, Integer> getAllBasket() {
