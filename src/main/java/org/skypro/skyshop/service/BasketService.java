@@ -4,7 +4,6 @@ import org.skypro.skyshop.model.basket.BasketItem;
 import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.model.product.Product;
-import org.skypro.skyshop.model.search.Searchable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,8 +35,10 @@ public class BasketService {
     }
 
     public UserBasket getUserBasket() {
-        Collection<ProductBasket> productBasket = getStorageService().getAllProducts().stream().map((Product id) -> getBasketId()).collect(Collectors.toSet());
-        return new UserBasket(productBasket);
+        List<BasketItem> basketItem = getBasketId().getAllBasket().entrySet().stream()
+                .map(entry -> new BasketItem(storageService.getProduct(entry.getKey()), entry.getValue()))
+                .collect(Collectors.toSet());
+        return new UserBasket(basketItem);
     }
 
 }

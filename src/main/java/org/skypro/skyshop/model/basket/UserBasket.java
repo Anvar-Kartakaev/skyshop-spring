@@ -8,9 +8,7 @@ public class UserBasket {
 
     public UserBasket(List<BasketItem> items) {
         this.items = items;
-        double sum = items.stream().mapToDouble(x -> x.getProduct().getPrice()).sum();
-        int counts = items.stream().mapToInt(BasketItem::getCount).sum();
-        this.total = sum * counts;
+        this.total = items.stream().mapToDouble(p -> p.getProduct().getPrice() * p.getCount()).sum();
     }
 
     public List<BasketItem> getItems() {

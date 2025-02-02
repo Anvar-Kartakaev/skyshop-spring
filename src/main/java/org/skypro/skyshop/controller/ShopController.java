@@ -3,6 +3,7 @@ package org.skypro.skyshop.controller;
 import org.skypro.skyshop.model.article.Article;
 import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.model.product.Product;
+import org.skypro.skyshop.service.BasketService;
 import org.skypro.skyshop.service.SearchResult;
 import org.skypro.skyshop.model.search.SearchService;
 import org.skypro.skyshop.service.StorageService;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.Collection;
 import java.util.Set;
@@ -20,6 +20,7 @@ import java.util.UUID;
 public class ShopController {
     private final SearchService searchService;
     private final StorageService storageService;
+    private BasketService basketService;
 
     public ShopController(SearchService searchService, StorageService storageService) {
         this.searchService = searchService;
@@ -53,7 +54,6 @@ public class ShopController {
 
     @GetMapping("/basket")
     public UserBasket getUserBasket() {
-        return new UserBasket(getUserBasket().getItems());
+        return basketService.getUserBasket();
     }
-
 }
