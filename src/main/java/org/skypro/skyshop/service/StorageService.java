@@ -33,8 +33,8 @@ public class StorageService {
         article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Alone man", "The history for alone man"));
     }
 
-    public Collection<Product> getAllProducts() {
-        return product.values();
+    public Map<UUID, Product> getAllProducts() {
+        return product;
     }
 
     public Collection<Article> getAllArticles() {

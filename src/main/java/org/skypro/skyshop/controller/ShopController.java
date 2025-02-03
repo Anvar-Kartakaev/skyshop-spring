@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,11 +21,12 @@ import java.util.UUID;
 public class ShopController {
     private final SearchService searchService;
     private final StorageService storageService;
-    private BasketService basketService;
+    private final BasketService basketService;
 
-    public ShopController(SearchService searchService, StorageService storageService) {
+    public ShopController(SearchService searchService, StorageService storageService, BasketService basketService) {
         this.searchService = searchService;
         this.storageService = storageService;
+        this.basketService = basketService;
     }
 
     @GetMapping
@@ -33,7 +35,7 @@ public class ShopController {
     }
 
     @GetMapping("/products")
-    public Collection<Product> getAllProducts() {
+    public Map<UUID, Product> getAllProducts() {
         return storageService.getAllProducts();
     }
 
@@ -48,7 +50,8 @@ public class ShopController {
     }
 
     @GetMapping("/basket/{id}")
-    public String addProduct(@PathVariable("id") UUID id) {
+    public String addProductToBasket(@PathVariable("id") UUID id) {
+        this.basketService.addProductToBasket(id);
         return "*Продукт успешно добавлен*";
     }
 

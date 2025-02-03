@@ -4,21 +4,23 @@ import org.skypro.skyshop.model.basket.BasketItem;
 import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.model.product.Product;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Service
 public class BasketService {
-    private final ProductBasket basketId;
+    private final ProductBasket productBasket;
     private final StorageService storageService;
 
-    public BasketService(ProductBasket basketId, StorageService storageService) {
-        this.basketId = basketId;
+    public BasketService(ProductBasket productBasket, StorageService storageService) {
+        this.productBasket = productBasket;
         this.storageService = storageService;
     }
 
-    public ProductBasket getBasketId() {
-        return basketId;
+    public ProductBasket getProductBasket() {
+        return productBasket;
     }
 
     public StorageService getStorageService() {
@@ -26,18 +28,18 @@ public class BasketService {
     }
 
     public void addProductToBasket(UUID id) {
-        Optional<Product> productOptional = storageService.getProductById(id);
-        if (productOptional.isPresent()) {
+        Optional<Product> productOptional = getStorageService().getProductById(id);
+        if (!productOptional.isPresent()) {
             throw new IllegalArgumentException("Товар отсутствует!");
         } else {
-            basketId.addProduct(id);
+            productBasket.addProduct(id);
         }
     }
 
     public UserBasket getUserBasket() {
-        List<BasketItem> basketItem = getBasketId().getAllBasket().entrySet().stream()
-                .map(entry -> new BasketItem(storageService.getProduct(entry.getKey()), entry.getValue()))
-                .collect(Collectors.toSet());
+        List<BasketItem> basketItem = getProductBasket().getAllBasket().entrySet().stream()
+                .map(entry -> new BasketItem(getStorageService().getAllProducts().get(entry.getKey()), entry.getValue()))
+                .collect(Collectors.toList());
         return new UserBasket(basketItem);
     }
 
