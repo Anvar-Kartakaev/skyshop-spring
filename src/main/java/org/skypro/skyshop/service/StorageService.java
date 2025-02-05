@@ -23,16 +23,18 @@ public class StorageService {
 
     private void addProductsAndArticles() {
         product.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Арбуз", 100));
-        product.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Арбуз", 100));
+        product.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Груши", 100));
         product.put(UUID.randomUUID(), new DiscountedProduct(UUID.randomUUID(), "Яблоки", 80, 5));
+        product.put(UUID.randomUUID(), new DiscountedProduct(UUID.randomUUID(), "Виноград", 90, 8));
         product.put(UUID.randomUUID(), new FixPriceProduct(UUID.randomUUID(), "Вишня"));
+        product.put(UUID.randomUUID(), new FixPriceProduct(UUID.randomUUID(), "Черешня"));
         article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "World", "This is my world and my life"));
         article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Java code", "Development in Java code"));
         article.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Alone man", "The history for alone man"));
     }
 
-    public Collection<Product> getAllProducts() {
-        return product.values();
+    public Map<UUID, Product> getAllProducts() {
+        return product;
     }
 
     public Collection<Article> getAllArticles() {
@@ -44,6 +46,10 @@ public class StorageService {
         searchable.addAll(product.values());
         searchable.addAll(article.values());
         return searchable;
+    }
+
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(product.get(id));
     }
 
 }
