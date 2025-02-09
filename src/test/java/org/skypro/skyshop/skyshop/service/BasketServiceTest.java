@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.service.BasketService;
@@ -16,33 +15,25 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class BasketServiceTest {
-    @Mock
     private ProductBasket productBasket;
-    @Mock
     private StorageService storageService;
-    @Mock
     private BasketService basketService;
-
-    public BasketServiceTest(ProductBasket productBasket, StorageService storageService, BasketService basketService) {
-        this.productBasket = productBasket;
-        this.storageService = storageService;
-        this.basketService = basketService;
-    }
 
     @BeforeEach
     public void setUp() {
+        productBasket = new ProductBasket();
     }
 
     @Test
     public void whenAddProductToBasketIsNot_ThenBasketServiceReturnsResults(UUID id) {
-        when(!(storageService.getProductById(id).equals(id))).thenReturn(true);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {});
+        when(id.equals(storageService.getProductById(id))).thenReturn(false);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> basketService.addProductToBasket(id));
     }
 
     @Test
     public void whenAddProductToBasketIsExists_ThenBasketServiceReturnsResults(UUID id) {
-        when(id.equals(productBasket.getAllBasket().get(id))).thenReturn(true);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {});
+        when(id.equals(storageService.getProductById(id))).thenReturn(true);
+        Assertions.assertDoesNotThrow(() -> basketService.addProductToBasket(id));
     }
 
     @Test

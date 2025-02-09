@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.skypro.skyshop.model.search.SearchService;
 import org.skypro.skyshop.service.StorageService;
@@ -16,15 +15,9 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class SearchServiceTest {
-    @Mock
     private SearchService searchService;
-    private final StorageService storageService;
+    private StorageService storageService;
     private Random randomMock;
-
-    public SearchServiceTest(SearchService searchService, StorageService storageService) {
-        this.searchService = searchService;
-        this.storageService = storageService;
-    }
 
     @BeforeEach
     void setUp() {
@@ -40,13 +33,13 @@ public class SearchServiceTest {
 
     @Test
     public void whenPatternIsNull_ThenSearchServiceReturnsError(String pattern) {
-        when(pattern.isBlank()).thenReturn(null);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {});
+        when(pattern.isBlank()).thenReturn(true);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> searchService.search(pattern));
     }
 
     @Test
     public void whenPatternIsEmpty_ThenSearchServiceReturnsError(String pattern) {
-        when(pattern.isEmpty()).thenReturn(false);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {});
+        when(pattern.isEmpty()).thenReturn(true);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> searchService.search(pattern));
     }
 }
